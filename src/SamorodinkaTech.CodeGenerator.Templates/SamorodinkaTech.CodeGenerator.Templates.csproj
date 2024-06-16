@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Partials\" />
+    <None Remove="Models\" />
+    <None Remove="Extensions\" />
+    <None Remove="Builders\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="CSharpJsonModelCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CSharpJsonModelCode.cs</LastGenOutput>
+    </None>
+    <None Update="CSharpMethodDeclarationNRealizationCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CSharpMethodDeclarationNRealizationCode.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CSharpJsonModelCode.cs">
+      <DependentUpon>CSharpJsonModelCode.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CSharpMethodDeclarqtionNRealizationCode.cs">
+      <DependentUpon>CSharpMethodDeclarationNRealizationCode.tt</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="CSharpMethodDeclarationNRealizationCode.cs">
+      <DependentUpon>CSharpMethodDeclarationNRealizationCode.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.CodeDom" Version="8.0.0" />
+    <PackageReference Include="SamorodinkaTech.CaseTransmogrifier" Version="1.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Partials\" />
+    <Folder Include="Models\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Builders\" />
+  </ItemGroup>
+</Project>

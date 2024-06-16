@@ -1,0 +1,115 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="SamorodinkaTech.CodeGenerator.Templates.Extensions" #>
+
+<#
+var parameterCount = _methodDeclaration.Parameters.Count;
+var lastIndex = parameterCount - 1;
+
+var _params = _methodDeclaration.Parameters
+    .OrderByDescending(x => x.IsRequired)
+    .ToList();
+
+var methodDescriptionLines = _methodDeclaration.Description.SplitText(108);
+#>
+    /// <summary>
+<#
+for (var i=0; i < methodDescriptionLines.Count; i++)
+{
+#>
+    /// <#= methodDescriptionLines[i] #>
+<#
+}
+#>
+    /// </summary>
+<#
+for(var i=0; i<parameterCount; i++)
+{
+    var p = _params[i];
+#>
+    /// <param name="<#=p.Identifier#>"><#=p.Description#></param>
+<#
+}
+#>
+    Task<<#= _methodDeclaration.ResultType #>> <#= _methodDeclaration.Identifier #>Async(<#
+
+for(var i=0; i<parameterCount; i++)
+{
+    var p = _params[i];
+
+    Write("\r\n");
+
+#>           <#= p.ParameterType #><#
+    if (!p.IsRequired) {
+#>?<#
+    }
+#> <#= p.Identifier #><#
+    if (!p.IsRequired) {
+#> = null<#
+    }
+    if (i != lastIndex) {
+#>,<#
+    }
+}
+Write("\r\n");
+#>    );
+
+===================== Realization =====================
+
+    public async Task<<#= _methodDeclaration.ResultType #>> <#= _methodDeclaration.Identifier #>Async(<#
+
+for(var i=0; i<parameterCount; i++)
+{
+    var p = _params[i];
+
+    Write("\r\n");
+
+#>        <#= p.ParameterType #><#
+    if (!p.IsRequired) {
+#>?<#
+    }
+#> <#= p.Identifier #><#
+    if (!p.IsRequired) {
+#> = null<#
+    }
+    if (i != lastIndex) {
+#>,<#
+    }
+}
+Write("\r\n");
+#>    )
+    {
+<#
+            foreach(var p in _params)
+            {
+                if (p.IsRequired && p.ParameterType.Equals("string", StringComparison.OrdinalIgnoreCase)) {
+#>
+        if (string.IsNullOrEmpty(<#= p.Identifier #>))
+            throw new ArgumentNullException(nameof(<#= p.Identifier #>));
+<#
+                    Write("\r\n");
+                }
+            }
+#>
+        var json = await SendGetRequestAndHandleErrorAsync(<#
+Write("\r\n");
+#>            UrlBuilder.BotApiUrl("<#= _methodDeclaration.Name #>"<#
+
+            if (parameterCount > 0) {
+#>, x => x<#
+Write("\r\n");
+                foreach(var p in _params)
+                {
+#>                .Add("<#= p.JsonParameter #>", <#= p.Identifier #>)<#
+                    Write("\r\n");
+                }
+Write("\r\n                ");
+            }
+#>)
+        );
+
+        return DeserializeTelegramResponse<<#= _methodDeclaration.ResultType #>>(json);
+    }

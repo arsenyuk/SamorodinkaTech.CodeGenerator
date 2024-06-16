@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SamorodinkaTech.CodeGenerator.MainPage">
+
+    <Grid Padding="20" ColumnSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"  />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <!-- Ввод текста -->
+        <Editor x:Name="InputEntry"
+                IsReadOnly="False" 
+                VerticalOptions="Fill"
+                VerticalTextAlignment="Start"
+                IsSpellCheckEnabled="False"
+                Keyboard="Plain"
+                Grid.Row="0"
+                />
+        <Picker x:Name="LanguagePicker"
+                SelectedIndex="0"
+                Grid.Row="1">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>C#</x:String>
+                    <!--x:String>GO</x:String-->
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Picker x:Name="NameTemplatePicker"
+                ItemsSource="{Binding CodeTemplates, Mode=TwoWay}"
+                ItemDisplayBinding="{Binding Title}"
+                SelectedItem="{Binding CodeTemplateSelectedItem}"
+                SelectedIndexChanged="NameTemplatePicker_SelectedIndexChanged"
+                SelectedIndex="0"
+                Grid.Row="2">
+        </Picker>
+        <!-- Кнопка для запуска парсинга -->
+        <Button x:Name="CounterBtn" 
+                Text="Разбить текст на параметры и сгенерировать код" 
+                Clicked="OnParseAndGenerateCodeClicked"
+                VerticalOptions="Center"
+                Grid.Row="3"/>
+
+        <!-- Вывод результата -->
+        <Editor x:Name="ResultEditor"
+                IsReadOnly="False" 
+                VerticalOptions="Fill"
+                VerticalTextAlignment="Start"
+                IsSpellCheckEnabled="False"
+                Grid.Row="4"
+                />
+    </Grid>
+
+</ContentPage>
