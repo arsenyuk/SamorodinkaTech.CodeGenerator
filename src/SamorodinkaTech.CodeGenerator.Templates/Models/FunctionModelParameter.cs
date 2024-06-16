@@ -1,32 +1,32 @@
 ﻿namespace SamorodinkaTech.CodeGenerator.Templates.Models;
 
 /// <summary>
-/// Параметр метода
+/// Function parameter
 /// </summary>
-public class MethodModelParameter
+public class FunctionModelParameter
 {
     /// <summary>
-    /// Описание
+    /// Description
     /// </summary>
     public string Description { get; set; } = string.Empty;
 
     /// <summary>
-    /// Тип параметра
+    /// Parameter type
     /// </summary>
     public string ParameterType { get; set; } = string.Empty;
 
     /// <summary>
-    /// Имя параметра
+    /// Json parameter name
     /// </summary>
     public string JsonParameter { get; set; } = string.Empty;
 
     /// <summary>
-    /// Имя параметра
+    /// Parameter identifier
     /// </summary>
     public string Identifier { get; set; } = string.Empty;
 
     /// <summary>
-    /// Обязательность параметра
+    /// Required parameter
     /// </summary>
     public bool IsRequired { get; set; } = true;
 }

@@ -1,33 +1,33 @@
 ﻿namespace SamorodinkaTech.CodeGenerator.Templates.Models;
 
 /// <summary>
-/// Модель для декларации асинхронного метода
+/// Model for function declaration
 /// </summary>
-public class MethodModelDeclaration
+public class FunctionModelDeclaration
 {
     /// <summary>
-    /// Описание
+    /// Declaration
     /// </summary>
     public string Description { get; set; } = string.Empty;
 
     /// <summary>
-    /// Имя метода
+    /// Name
     /// </summary>
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Идентификатор функции
+    /// Function identifier
     /// </summary>
     public string Identifier { get; set; } = string.Empty;
 
     /// <summary>
-    /// Тип результата
+    /// Result type
     /// </summary>
     public string ResultType { get; set; } = string.Empty;
 
     /// <summary>
-    /// Параметры метода
+    /// Function paramters
     /// </summary>
-    public List<MethodModelParameter> Parameters { get; set; } = new List<MethodModelParameter>();
+    public List<FunctionModelParameter> Parameters { get; set; } = new List<FunctionModelParameter>();
 }
 

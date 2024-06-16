@@ -30,15 +30,15 @@ public partial class MainPage : ContentPage
         var jsonModelCT = new CodeTemplateItem();
         jsonModelCT.Title = "JSON model";
         jsonModelCT.Code = "CSharp_JSON_model";
-        jsonModelCT.Pattern = "<entity identifier>\r\n<entity description>"
-            + "\r\n\r\n(Field\tType\tDescription)?\r\n"
-            + "(<field identifier>\t<field type>\t<field description>)*";
+        jsonModelCT.Pattern = "<model identifier>\r\n<model description>"
+            + "\r\n\r\n(Property\tType\tDescription)?\r\n"
+            + "(<prop identifier>\t<prop type>\t<prop description>)*";
         CodeTemplates.Add(jsonModelCT);
 
         var asyncMethodCT = new CodeTemplateItem();
-        asyncMethodCT.Title = "Async method declaration'n'realization";
+        asyncMethodCT.Title = "Async function declaration'n'realization";
         asyncMethodCT.Code = "CSharp_async_methos";
-        asyncMethodCT.Pattern = "<method identifier>\r\n<method description>"
+        asyncMethodCT.Pattern = "<funct identifier>\r\n<funct description>"
             + "\r\n\r\n(Field\tType\tRequired\tDescription)?\r\n"
             + "(<param identifier>\t<param type>\t<param required>\t<param description>)*";
         CodeTemplates.Add(asyncMethodCT);
@@ -59,7 +59,7 @@ public partial class MainPage : ContentPage
 
     private void OnParseAndGenerateCodeClicked(object sender, EventArgs e)
     {
-        // Получаем текст с описанием модели
+        // Get text with a description of the model
         string inputText = InputEntry.Text;
 
         var item = (CodeTemplateItem)NameTemplatePicker.SelectedItem;
@@ -68,31 +68,31 @@ public partial class MainPage : ContentPage
 
         if (item.Code == "CSharp_JSON_model")
         {
-            // Распознаем пераметры модели в тексте
+            // Recognizing model in text
             var jsonModel = JsonModelBuilder.ParseTextAndCreateModel(inputText);
 
-            // Генерируем код на основе параметров модели
-            generatedCode = MainPage.GenerateCodeFromParameters(jsonModel);
+            // Code generation based on model parameters
+            generatedCode = GenerateCodeFromParametersAsync(jsonModel).Result;
 
         }
         else if (item.Code == "CSharp_async_methos")
         {
-            // Распознаем пераметры модели в тексте
-            var methodModel = MethodModelBuilder.ParseTextAndCreateModel(inputText);
+            // Recognizing model in text
+            var methodModel = FunctionModelBuilder.ParseTextAndCreateModel(inputText);
 
-            // Генерируем код на основе параметров модели
-            generatedCode = MainPage.GenerateCodeFromParameters(methodModel);
+            // Code generation based on model parameters
+            generatedCode = GenerateCodeFromParametersAsync(methodModel).Result;
         }
 
-        // Отображаем результат в Editor
+        // Displaying the result
 
         ResultEditor.Text = generatedCode;
     }
 
     /// <summary>
-    /// Генерируем код на основе параметров модели
+    /// Generating code based on model parameters
     /// </summary>
-    private static string GenerateCodeFromParameters(JsonModelDeclaration modelDeclaration)
+    private async Task<string> GenerateCodeFromParametersAsync(JsonModelDeclaration modelDeclaration)
     {
         try
         {
@@ -102,16 +102,16 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            await DisplayAlert("Alert", ex.ToString(), "OK");
         }
 
         return "";
     }
 
     /// <summary>
-    /// Генерируем код на основе параметров модели
-    /// </summary>
-    private static string GenerateCodeFromParameters(MethodModelDeclaration modelDeclaration)
+    /// Code generation based on model parameters
+    /// </summary>Ï
+    private async Task<string> GenerateCodeFromParametersAsync(FunctionModelDeclaration modelDeclaration)
     {
         try
         {
@@ -121,7 +121,7 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            await DisplayAlert("Alert", ex.ToString(), "OK");
         }
 
         return "";

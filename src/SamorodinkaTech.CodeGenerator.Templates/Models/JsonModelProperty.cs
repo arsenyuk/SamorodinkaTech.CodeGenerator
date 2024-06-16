@@ -26,7 +26,7 @@ public class JsonModelProperty
     public string Identifier { get; set; } = string.Empty;
 
     /// <summary>
-    /// Is required
+    /// Required property
     /// </summary>
     public bool IsRequired { get; set; } = true;
 }

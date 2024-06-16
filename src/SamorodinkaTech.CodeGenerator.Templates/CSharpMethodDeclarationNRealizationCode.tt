@@ -6,14 +6,14 @@
 <#@ import namespace="SamorodinkaTech.CodeGenerator.Templates.Extensions" #>
 
 <#
-var parameterCount = _methodDeclaration.Parameters.Count;
+var parameterCount = _functionDeclaration.Parameters.Count;
 var lastIndex = parameterCount - 1;
 
-var _params = _methodDeclaration.Parameters
+var _params = _functionDeclaration.Parameters
     .OrderByDescending(x => x.IsRequired)
     .ToList();
 
-var methodDescriptionLines = _methodDeclaration.Description.SplitText(108);
+var methodDescriptionLines = _functionDeclaration.Description.SplitText(108);
 #>
     /// <summary>
 <#
@@ -34,7 +34,7 @@ for(var i=0; i<parameterCount; i++)
 <#
 }
 #>
-    Task<<#= _methodDeclaration.ResultType #>> <#= _methodDeclaration.Identifier #>Async(<#
+    Task<<#= _functionDeclaration.ResultType #>> <#= _functionDeclaration.Identifier #>Async(<#
 
 for(var i=0; i<parameterCount; i++)
 {
@@ -59,7 +59,7 @@ Write("\r\n");
 
 ===================== Realization =====================
 
-    public async Task<<#= _methodDeclaration.ResultType #>> <#= _methodDeclaration.Identifier #>Async(<#
+    public async Task<<#= _functionDeclaration.ResultType #>> <#= _functionDeclaration.Identifier #>Async(<#
 
 for(var i=0; i<parameterCount; i++)
 {
@@ -96,7 +96,7 @@ Write("\r\n");
 #>
         var json = await SendGetRequestAndHandleErrorAsync(<#
 Write("\r\n");
-#>            UrlBuilder.BotApiUrl("<#= _methodDeclaration.Name #>"<#
+#>            UrlBuilder.BotApiUrl("<#= _functionDeclaration.Name #>"<#
 
             if (parameterCount > 0) {
 #>, x => x<#
@@ -111,5 +111,5 @@ Write("\r\n                ");
 #>)
         );
 
-        return DeserializeTelegramResponse<<#= _methodDeclaration.ResultType #>>(json);
+        return DeserializeTelegramResponse<<#= _functionDeclaration.ResultType #>>(json);
     }

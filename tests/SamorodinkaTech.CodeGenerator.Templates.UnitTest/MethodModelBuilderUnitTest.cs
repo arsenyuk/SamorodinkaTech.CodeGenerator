@@ -10,7 +10,7 @@ public class MethodModelBuilderUnitTest
     {
         try
         {
-            var model = MethodModelBuilder.ParseTextAndCreateModel("");
+            var model = FunctionModelBuilder.ParseTextAndCreateModel("");
         }
         catch (Exception ex)
         {

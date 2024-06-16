@@ -32,7 +32,7 @@ public static class JsonModelBuilder
         var i = 2;
         while (i < lines.Count &&
             (string.IsNullOrWhiteSpace(lines[i])
-                || lines[i].StartsWith("Field") && lines[i].Contains("Type"))
+                || lines[i].StartsWith("Property") && lines[i].Contains("Type"))
             )
         {
             i++;

@@ -28,14 +28,14 @@ namespace SamorodinkaTech.CodeGenerator.Templates {
             
             #line 8 ""
 
-var parameterCount = _methodDeclaration.Parameters.Count;
+var parameterCount = _functionDeclaration.Parameters.Count;
 var lastIndex = parameterCount - 1;
 
-var _params = _methodDeclaration.Parameters
+var _params = _functionDeclaration.Parameters
     .OrderByDescending(x => x.IsRequired)
     .ToList();
 
-var methodDescriptionLines = _methodDeclaration.Description.SplitText(108);
+var methodDescriptionLines = _functionDeclaration.Description.SplitText(108);
 
             
             #line default
@@ -143,7 +143,7 @@ for(var i=0; i<parameterCount; i++)
             #line hidden
             
             #line 37 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( _methodDeclaration.ResultType ));
+            this.Write(this.ToStringHelper.ToStringWithCulture( _functionDeclaration.ResultType ));
             
             #line default
             #line hidden
@@ -155,7 +155,7 @@ for(var i=0; i<parameterCount; i++)
             #line hidden
             
             #line 37 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( _methodDeclaration.Identifier ));
+            this.Write(this.ToStringHelper.ToStringWithCulture( _functionDeclaration.Identifier ));
             
             #line default
             #line hidden
@@ -273,7 +273,7 @@ Write("\r\n");
             #line hidden
             
             #line 68 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( _methodDeclaration.ResultType ));
+            this.Write(this.ToStringHelper.ToStringWithCulture( _functionDeclaration.ResultType ));
             
             #line default
             #line hidden
@@ -285,7 +285,7 @@ Write("\r\n");
             #line hidden
             
             #line 68 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( _methodDeclaration.Identifier ));
+            this.Write(this.ToStringHelper.ToStringWithCulture( _functionDeclaration.Identifier ));
             
             #line default
             #line hidden
@@ -472,7 +472,7 @@ Write("\r\n");
             #line hidden
             
             #line 112 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( _methodDeclaration.Name ));
+            this.Write(this.ToStringHelper.ToStringWithCulture( _functionDeclaration.Name ));
             
             #line default
             #line hidden
@@ -556,7 +556,7 @@ Write("\r\n                ");
             #line hidden
             
             #line 130 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( _methodDeclaration.ResultType ));
+            this.Write(this.ToStringHelper.ToStringWithCulture( _functionDeclaration.ResultType ));
             
             #line default
             #line hidden

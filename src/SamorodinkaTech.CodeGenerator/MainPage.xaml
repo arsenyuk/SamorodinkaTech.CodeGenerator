@@ -3,6 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SamorodinkaTech.CodeGenerator.MainPage">
 
+    <ContentPage.Resources>
+            
+        <Style TargetType="Page" ApplyToDerivedTypes="True">
+            <Setter Property="Shell.NavBarIsVisible" Value="False" />
+        </Style>
+
+    </ContentPage.Resources>
+
     <Grid Padding="20" ColumnSpacing="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -12,7 +20,7 @@
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
 
-        <!-- Ввод текста -->
+        <!-- Entering text -->
         <Editor x:Name="InputEntry"
                 IsReadOnly="False" 
                 VerticalOptions="Fill"
@@ -39,14 +47,14 @@
                 SelectedIndex="0"
                 Grid.Row="2">
         </Picker>
-        <!-- Кнопка для запуска парсинга -->
+        <!-- Button to start parsing -->
         <Button x:Name="CounterBtn" 
-                Text="Разбить текст на параметры и сгенерировать код" 
+                Text="Recognize a model in text and generate code" 
                 Clicked="OnParseAndGenerateCodeClicked"
                 VerticalOptions="Center"
                 Grid.Row="3"/>
 
-        <!-- Вывод результата -->
+        <!--  Result output -->
         <Editor x:Name="ResultEditor"
                 IsReadOnly="False" 
                 VerticalOptions="Fill"

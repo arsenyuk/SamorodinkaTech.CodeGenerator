@@ -7,13 +7,13 @@ namespace SamorodinkaTech.CodeGenerator.Templates;
 /// </summary>
 public partial class CSharpMethodDeclarationNRealizationCode
 {
-    protected MethodModelDeclaration _methodDeclaration;
+    protected FunctionModelDeclaration _functionDeclaration;
 
     /// <summary>
     /// .ctor
     /// </summary>
-    public CSharpMethodDeclarationNRealizationCode(MethodModelDeclaration methodDeclaration)
+    public CSharpMethodDeclarationNRealizationCode(FunctionModelDeclaration functionDeclaration)
     {
-        _methodDeclaration = methodDeclaration;
+        _functionDeclaration = functionDeclaration;
     }
 }

@@ -5,19 +5,19 @@ using SamorodinkaTech.CodeGenerator.Templates.Models;
 namespace SamorodinkaTech.CodeGenerator.Templates.Builders;
 
 /// <summary>
-/// MethodModelDeclaration instance builder
+/// FunctionModelDeclaration instance builder
 /// </summary>
-public static class MethodModelBuilder
+public static class FunctionModelBuilder
 {
     /// <summary>
-    /// Parse text and create MethodModelDeclaration model
+    /// Parse text and create FunctionModelDeclaration model
     /// </summary>
     /// <param name="text">Text for pasing</param>
-    public static MethodModelDeclaration ParseTextAndCreateModel(string text)
+    public static FunctionModelDeclaration ParseTextAndCreateModel(string text)
     {
         var lines = text.GetLines();
 
-        var model = new MethodModelDeclaration();
+        var model = new FunctionModelDeclaration();
 
         if (lines.Count == 0)
             return model;
@@ -28,9 +28,14 @@ public static class MethodModelBuilder
         if (lines.Count == 1)
             return model;
 
-        model.Description = lines[1];
+        model.ResultType = lines[1];
 
-        var i = 2;
+        if (lines.Count == 2)
+            return model;
+
+        model.Description = lines[2];
+
+        var i = 3;
         while (i < lines.Count &&
             (string.IsNullOrWhiteSpace(lines[i])
                 || lines[i].StartsWith("Parameter")
@@ -50,7 +55,7 @@ public static class MethodModelBuilder
             if (parts.Count == 0)
                 continue;
 
-            var modelParameter = new MethodModelParameter();
+            var modelParameter = new FunctionModelParameter();
 
             modelParameter.JsonParameter = parts[0];
             modelParameter.Identifier = modelParameter.JsonParameter.CamelCase();
