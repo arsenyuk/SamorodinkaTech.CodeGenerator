@@ -19,5 +19,10 @@ public class CodeTemplateItem
     /// Syntax pattern
     /// </summary>
     public string Pattern { get; set; }
+
+    /// <summary>
+    /// Language
+    /// </summary>
+    public string Language { get; set; }
 }
 

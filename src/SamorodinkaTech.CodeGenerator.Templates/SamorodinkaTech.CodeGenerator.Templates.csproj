@@ -21,21 +21,32 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CSharpMethodDeclarationNRealizationCode.cs</LastGenOutput>
     </None>
+    <None Update="CSharpSystemTextJsonModelCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CSharpSystemTextJsonModelCode.cs</LastGenOutput>
+    </None>
+    <None Update="CSharpFluentApiCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CSharpFluentApiCode.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="CSharpJsonModelCode.cs">
-      <DependentUpon>CSharpJsonModelCode.tt</DependentUpon>
-    </Compile>
-    <Compile Update="CSharpMethodDeclarqtionNRealizationCode.cs">
+    <Compile Update="CSharpMethodDeclarationNRealizationCode.cs">
       <DependentUpon>CSharpMethodDeclarationNRealizationCode.tt</DependentUpon>
     </Compile>
-    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="CSharpMethodDeclarationNRealizationCode.cs">
-      <DependentUpon>CSharpMethodDeclarationNRealizationCode.tt</DependentUpon>
+    <Compile Update="CSharpSystemTextJsonModelCode.cs">
+      <DependentUpon>CSharpSystemTextJsonModelCode.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CSharpNewtonsoftJsonModelCode.cs">
+      <DependentUpon>CSharpNewtonsoftJsonModelCode.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CSharpFluentApiCode.cs">
+      <DependentUpon>CSharpFluentApiCode.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.CodeDom" Version="8.0.0" />
-    <PackageReference Include="SamorodinkaTech.CaseTransmogrifier" Version="1.0.2" />
+    <PackageReference Include="SamorodinkaTech.CaseTransmogrifier" Version="1.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Partials\" />

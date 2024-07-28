@@ -13,11 +13,11 @@ public static class FunctionModelBuilder
     /// Parse text and create FunctionModelDeclaration model
     /// </summary>
     /// <param name="text">Text for pasing</param>
-    public static FunctionModelDeclaration ParseTextAndCreateModel(string text)
+    public static FunctionModel ParseTextAndCreateModel(string text)
     {
         var lines = text.GetLines();
 
-        var model = new FunctionModelDeclaration();
+        var model = new FunctionModel();
 
         if (lines.Count == 0)
             return model;

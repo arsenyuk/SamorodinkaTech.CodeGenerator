@@ -1,0 +1,67 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="SamorodinkaTech.CodeGenerator.Templates.Extensions" #>
+
+using System.Text.Json.Serialization;
+
+namespace /*namespace*/.Models;
+
+<#
+var modelDescriptionLines = _modelDeclaration.Description.SplitText(108);
+#>
+/// <summary>
+<#
+for (var i=0; i < modelDescriptionLines.Count; i++)
+{
+#>
+/// <#= modelDescriptionLines[i] #>
+<#
+}
+#>
+/// </summary>
+public class <#= _modelDeclaration.Identifier #>
+{
+<#
+var parameterCount = _modelDeclaration.Properties.Count;
+var lastIndex = parameterCount - 1;
+
+for (var i=0; i<parameterCount; i++)
+{
+    var p = _modelDeclaration.Properties[i];
+
+    var propertyDescriptionLines = p.Description.SplitText(104);
+
+#>    /// <summary>
+<#
+for (var j=0; j < propertyDescriptionLines.Count; j++)
+{
+#>
+    /// <#= propertyDescriptionLines[j] #>
+<#
+}
+#>
+    /// </summary>
+    [JsonPropertyName("<#= p.JsonProperty #>")]
+<#
+    if (p.IsRequired) {
+#>
+    [JsonRequired]
+<#
+    }
+#>
+    public <#= p.PropertyType #><#
+
+    if (!p.IsRequired) {
+        Write("?");
+    }
+#> <#= p.Identifier #> { get; set; }<#
+    Write("\r\n");
+    if (i != lastIndex) {
+        Write("\r\n");
+    }
+}
+#>
+}

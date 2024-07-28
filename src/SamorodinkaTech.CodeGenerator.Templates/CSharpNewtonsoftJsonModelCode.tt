@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="SamorodinkaTech.CodeGenerator.Templates.Extensions" #>
 
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace /*namespace*/.Models;
 
@@ -44,7 +44,11 @@ for (var j=0; j < propertyDescriptionLines.Count; j++)
 }
 #>
     /// </summary>
-    [JsonPropertyName("<#= p.JsonProperty #>")]
+    [JsonProperty("<#= p.JsonProperty #>"<#
+    if (p.IsRequired) {
+        #>, Required = Required.Always<#
+    }
+#>)]
     public <#= p.PropertyType #><#
 
     if (!p.IsRequired) {

@@ -3,7 +3,7 @@
 /// <summary>
 /// Model for function declaration
 /// </summary>
-public class FunctionModelDeclaration
+public class FunctionModel
 {
     /// <summary>
     /// Declaration

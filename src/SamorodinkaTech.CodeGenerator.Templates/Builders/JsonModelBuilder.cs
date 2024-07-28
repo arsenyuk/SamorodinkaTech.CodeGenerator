@@ -5,19 +5,19 @@ using SamorodinkaTech.CodeGenerator.Templates.Models;
 namespace SamorodinkaTech.CodeGenerator.Templates.Builders;
 
 /// <summary>
-/// JsonModelDeclaration instance builder
+/// JsonModel instance builder
 /// </summary>
 public static class JsonModelBuilder
 {
     /// <summary>
-    /// Parse text and create JsonModelDeclaration model
+    /// Parse text and create JsonModel model
     /// </summary>
     /// <param name="text">Text for pasing</param>
-    public static JsonModelDeclaration ParseTextAndCreateModel(string text)
+    public static JsonModel ParseTextAndCreateModel(string text)
     {
         var lines = text.GetLines();
 
-        var model = new JsonModelDeclaration();
+        var model = new JsonModel();
 
         if (lines.Count == 0)
             return model;
@@ -32,7 +32,7 @@ public static class JsonModelBuilder
         var i = 2;
         while (i < lines.Count &&
             (string.IsNullOrWhiteSpace(lines[i])
-                || lines[i].StartsWith("Property") && lines[i].Contains("Type"))
+                || lines[i].StartsWith("Field") && lines[i].Contains("Type"))
             )
         {
             i++;

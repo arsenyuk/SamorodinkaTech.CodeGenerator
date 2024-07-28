@@ -5,14 +5,14 @@ namespace SamorodinkaTech.CodeGenerator.Templates;
 /// <summary>
 /// Additional .ctor with JsonModelDeclaration instance
 /// </summary>
-public partial class CSharpJsonModelCode
+public partial class CSharpNewtonsoftJsonModelCode
 {
-    protected JsonModelDeclaration _modelDeclaration;
+    protected JsonModel _modelDeclaration;
 
     /// <summary>
     /// .ctor
     /// </summary>
-    public CSharpJsonModelCode(JsonModelDeclaration modelDeclartion)
+    public CSharpNewtonsoftJsonModelCode(JsonModel modelDeclartion)
     {
         _modelDeclaration = modelDeclartion;
     }

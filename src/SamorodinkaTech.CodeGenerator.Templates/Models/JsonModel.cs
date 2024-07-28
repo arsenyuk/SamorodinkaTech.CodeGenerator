@@ -3,7 +3,7 @@
 /// <summary>
 /// Json model declaration
 /// </summary>
-public class JsonModelDeclaration
+public class JsonModel
 {
     /// <summary>
     /// Description

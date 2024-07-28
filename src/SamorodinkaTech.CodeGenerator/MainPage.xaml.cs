@@ -24,24 +24,50 @@ public partial class MainPage : ContentPage
         LanguagePicker.SelectedIndex = 0;
     }
 
+    private const string LangCSharp = "CSharp";
+    private const string LangGo = "Golang";
+
+    private const string CSharp_SystemTextJson = "CSharp_SystemTextJson";
+    private const string CSharp_NewtonsoftJson = "CSharp_NewtonsoftJson";
+    private const string CSharp_async_method = "CSharp_async_method";
+    private const string CSharp_FluentApi = "CSharp_FluentApi";
+
     private void InitNameTemplatePicker()
     {
-
-        var jsonModelCT = new CodeTemplateItem();
-        jsonModelCT.Title = "JSON model";
-        jsonModelCT.Code = "CSharp_JSON_model";
-        jsonModelCT.Pattern = "<model identifier>\r\n<model description>"
-            + "\r\n\r\n(Property\tType\tDescription)?\r\n"
+        var systemTextJsonCT = new CodeTemplateItem();
+        systemTextJsonCT.Language = LangCSharp;
+        systemTextJsonCT.Code = CSharp_SystemTextJson;
+        systemTextJsonCT.Title = "System Text Json style";
+        systemTextJsonCT.Pattern = "<model identifier>\r\n<model description>"
+            + "\r\n\r\n(Field\tType\tDescription)?\r\n"
             + "(<prop identifier>\t<prop type>\t<prop description>)*";
-        CodeTemplates.Add(jsonModelCT);
+        CodeTemplates.Add(systemTextJsonCT);
+
+        var newtonsoftJsonCT = new CodeTemplateItem();
+        newtonsoftJsonCT.Language = LangCSharp;
+        newtonsoftJsonCT.Code = CSharp_NewtonsoftJson;
+        newtonsoftJsonCT.Title = "Newtonsoft Json style";
+        newtonsoftJsonCT.Pattern = "<model identifier>\r\n<model description>"
+            + "\r\n\r\n(Field\tType\tDescription)?\r\n"
+            + "(<prop identifier>\t<prop type>\t<prop description>)*";
+        CodeTemplates.Add(newtonsoftJsonCT);
 
         var asyncMethodCT = new CodeTemplateItem();
+        asyncMethodCT.Language = LangCSharp;
         asyncMethodCT.Title = "Async function declaration'n'realization";
-        asyncMethodCT.Code = "CSharp_async_methos";
+        asyncMethodCT.Code = CSharp_async_method;
         asyncMethodCT.Pattern = "<funct identifier>\r\n<funct description>"
-            + "\r\n\r\n(Field\tType\tRequired\tDescription)?\r\n"
+            + "\r\n\r\n(Parameter\tType\tRequired\tDescription)?\r\n"
             + "(<param identifier>\t<param type>\t<param required>\t<param description>)*";
         CodeTemplates.Add(asyncMethodCT);
+
+        var fluentApiCT = new CodeTemplateItem();
+        fluentApiCT.Language = LangCSharp;
+        fluentApiCT.Title = "Fluent application programming interface";
+        fluentApiCT.Code = CSharp_FluentApi;
+        fluentApiCT.Pattern = "<class identifier>\r\n"
+            + "(<method identifier>)*"; ;
+        CodeTemplates.Add(fluentApiCT);
 
         NameTemplatePicker.ItemsSource = CodeTemplates;
         NameTemplatePicker.SelectedIndex = 0;
@@ -66,16 +92,25 @@ public partial class MainPage : ContentPage
 
         string generatedCode = "";
 
-        if (item.Code == "CSharp_JSON_model")
+        if (item.Code == CSharp_SystemTextJson)
         {
             // Recognizing model in text
             var jsonModel = JsonModelBuilder.ParseTextAndCreateModel(inputText);
 
             // Code generation based on model parameters
-            generatedCode = GenerateCodeFromParametersAsync(jsonModel).Result;
+            generatedCode = GenerateSystemTextJsonCodeFromParametersAsync(jsonModel).Result;
 
         }
-        else if (item.Code == "CSharp_async_methos")
+        else if (item.Code == CSharp_NewtonsoftJson)
+        {
+            // Recognizing model in text
+            var jsonModel = JsonModelBuilder.ParseTextAndCreateModel(inputText);
+
+            // Code generation based on model parameters
+            generatedCode = GenerateNewtonsoftJsonCodeFromParametersAsync(jsonModel).Result;
+
+        }
+        else if (item.Code == CSharp_async_method)
         {
             // Recognizing model in text
             var methodModel = FunctionModelBuilder.ParseTextAndCreateModel(inputText);
@@ -83,20 +118,48 @@ public partial class MainPage : ContentPage
             // Code generation based on model parameters
             generatedCode = GenerateCodeFromParametersAsync(methodModel).Result;
         }
+        else if (item.Code == CSharp_FluentApi)
+        {
+            // Recognizing model in text
+            var methodModel = FluentApiModelBuilder.ParseTextAndCreateModel(inputText);
 
-        // Displaying the result
+            // Code generation based on model parameters
+            generatedCode = GenerateCodeFromParametersAsync(methodModel).Result;
+        }
+
+        // Dispzlaying the result
 
         ResultEditor.Text = generatedCode;
+    }
+
+
+    /// <summary>
+    /// Generating code based on model parameters
+    /// </summary>
+    private async Task<string> GenerateSystemTextJsonCodeFromParametersAsync(JsonModel modelDeclaration)
+    {
+        try
+        {
+            var t = new CSharpSystemTextJsonModelCode(modelDeclaration);
+
+            return t.TransformText();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Alert", ex.ToString(), "OK");
+        }
+
+        return "";
     }
 
     /// <summary>
     /// Generating code based on model parameters
     /// </summary>
-    private async Task<string> GenerateCodeFromParametersAsync(JsonModelDeclaration modelDeclaration)
+    private async Task<string> GenerateNewtonsoftJsonCodeFromParametersAsync(JsonModel modelDeclaration)
     {
         try
         {
-            var t = new CSharpJsonModelCode(modelDeclaration);
+            var t = new CSharpNewtonsoftJsonModelCode(modelDeclaration);
 
             return t.TransformText();
         }
@@ -111,11 +174,38 @@ public partial class MainPage : ContentPage
     /// <summary>
     /// Code generation based on model parameters
     /// </summary>Ï
-    private async Task<string> GenerateCodeFromParametersAsync(FunctionModelDeclaration modelDeclaration)
+    private async Task<string> GenerateCodeFromParametersAsync(FunctionModel modelDeclaration)
     {
         try
         {
             var t = new CSharpMethodDeclarationNRealizationCode(modelDeclaration);
+
+            return t.TransformText();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Alert", ex.ToString(), "OK");
+        }
+
+        return "";
+    }
+
+    /// <summary>
+    /// Code generation based on model parameters
+    /// </summary>
+    /// <remarks>
+    /// TelegramChatBot
+    /// Start
+    /// InputText
+    /// InputContact
+    /// InputChoice
+    /// Finish
+    /// </remarks>
+    private async Task<string> GenerateCodeFromParametersAsync(FluentApiModel modelDeclaration)
+    {
+        try
+        {
+            var t = new CSharpFluentApiCode(modelDeclaration);
 
             return t.TransformText();
         }

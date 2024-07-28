@@ -11,212 +11,188 @@ namespace SamorodinkaTech.CodeGenerator.Templates {
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
-    using SamorodinkaTech.CodeGenerator.Templates.Extensions;
     using System;
     
     
-    public partial class CSharpJsonModelCode : CSharpJsonModelCodeBase {
+    public partial class CSharpFluentApiCode : CSharpFluentApiCodeBase {
         
         public virtual string TransformText() {
             this.GenerationEnvironment = null;
             
-            #line 7 ""
-            this.Write("\nusing System.Text.Json.Serialization;\n\nnamespace /*namespace*/.Models;\n\n");
+            #line 6 ""
+            this.Write("\n// ============================ interface ============================\nnamespace" +
+                    " /*namespace*/.Models;\n\n");
             
             #line default
             #line hidden
             
-            #line 12 ""
+            #line 10 ""
 
-var modelDescriptionLines = _modelDeclaration.Description.SplitText(108);
+var interfaceIdentifier = "I" + _fluentApiModel.Identifier;
+var classIdentifier = _fluentApiModel.Identifier;
+var methodNames = _fluentApiModel.MethodNames;
 
             
             #line default
             #line hidden
             
             #line 15 ""
-            this.Write("/// <summary>\n");
+            this.Write("public interface ");
             
             #line default
             #line hidden
             
-            #line 16 ""
-
-for (var i=0; i < modelDescriptionLines.Count; i++)
-{
-
+            #line 15 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture(interfaceIdentifier));
             
             #line default
             #line hidden
             
-            #line 20 ""
-            this.Write("/// ");
-            
-            #line default
-            #line hidden
-            
-            #line 20 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( modelDescriptionLines[i] ));
-            
-            #line default
-            #line hidden
-            
-            #line 20 ""
-            this.Write("\n");
-            
-            #line default
-            #line hidden
-            
-            #line 21 ""
-
-}
-
-            
-            #line default
-            #line hidden
-            
-            #line 24 ""
-            this.Write("/// </summary>\npublic class ");
-            
-            #line default
-            #line hidden
-            
-            #line 25 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( _modelDeclaration.Identifier ));
-            
-            #line default
-            #line hidden
-            
-            #line 25 ""
+            #line 15 ""
             this.Write("\n{\n");
             
             #line default
             #line hidden
             
-            #line 27 ""
+            #line 17 ""
 
-var parameterCount = _modelDeclaration.Properties.Count;
-var lastIndex = parameterCount - 1;
-
-for (var i=0; i<parameterCount; i++)
-{
-    var p = _modelDeclaration.Properties[i];
-
-    var propertyDescriptionLines = p.Description.SplitText(104);
-
-
-            
-            #line default
-            #line hidden
-            
-            #line 38 ""
-            this.Write("    /// <summary>\n");
-            
-            #line default
-            #line hidden
-            
-            #line 39 ""
-
-for (var j=0; j < propertyDescriptionLines.Count; j++)
+for (var i=0; i < methodNames.Count; i++)
 {
 
             
             #line default
             #line hidden
             
-            #line 43 ""
-            this.Write("    /// ");
+            #line 21 ""
+            this.Write("    public ");
             
             #line default
             #line hidden
             
-            #line 43 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( propertyDescriptionLines[j] ));
+            #line 21 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture(interfaceIdentifier));
             
             #line default
             #line hidden
             
-            #line 43 ""
-            this.Write("\n");
-            
-            #line default
-            #line hidden
-            
-            #line 44 ""
-
-}
-
-            
-            #line default
-            #line hidden
-            
-            #line 47 ""
-            this.Write("    /// </summary>\n    [JsonPropertyName(\"");
-            
-            #line default
-            #line hidden
-            
-            #line 48 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( p.JsonProperty ));
-            
-            #line default
-            #line hidden
-            
-            #line 48 ""
-            this.Write("\")]\n    public ");
-            
-            #line default
-            #line hidden
-            
-            #line 49 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( p.PropertyType ));
-            
-            #line default
-            #line hidden
-            
-            #line 49 ""
-
-
-    if (!p.IsRequired) {
-        Write("?");
-    }
-
-            
-            #line default
-            #line hidden
-            
-            #line 55 ""
+            #line 21 ""
             this.Write(" ");
             
             #line default
             #line hidden
             
-            #line 55 ""
-            this.Write(this.ToStringHelper.ToStringWithCulture( p.Identifier ));
+            #line 21 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture(methodNames[i]));
             
             #line default
             #line hidden
             
-            #line 55 ""
-            this.Write(" { get; set; }");
+            #line 21 ""
+            this.Write("();\n");
             
             #line default
             #line hidden
             
-            #line 55 ""
+            #line 22 ""
 
-    Write("\r\n");
-    if (i != lastIndex) {
-        Write("\r\n");
-    }
 }
 
             
             #line default
             #line hidden
             
-            #line 62 ""
-            this.Write("}\n");
+            #line 25 ""
+            this.Write("}\n// ============================ interface ============================\npublic c" +
+                    "lass ");
+            
+            #line default
+            #line hidden
+            
+            #line 27 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture(classIdentifier));
+            
+            #line default
+            #line hidden
+            
+            #line 27 ""
+            this.Write(" : ");
+            
+            #line default
+            #line hidden
+            
+            #line 27 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture(interfaceIdentifier));
+            
+            #line default
+            #line hidden
+            
+            #line 27 ""
+            this.Write("\n{\n");
+            
+            #line default
+            #line hidden
+            
+            #line 29 ""
+
+for (var i=0; i < methodNames.Count; i++)
+{
+
+            
+            #line default
+            #line hidden
+            
+            #line 33 ""
+            this.Write("    public ");
+            
+            #line default
+            #line hidden
+            
+            #line 33 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture(interfaceIdentifier));
+            
+            #line default
+            #line hidden
+            
+            #line 33 ""
+            this.Write(" ");
+            
+            #line default
+            #line hidden
+            
+            #line 33 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture(methodNames[i]));
+            
+            #line default
+            #line hidden
+            
+            #line 33 ""
+            this.Write("()\n    {\n        // TODO ");
+            
+            #line default
+            #line hidden
+            
+            #line 35 ""
+            this.Write(this.ToStringHelper.ToStringWithCulture(methodNames[i]));
+            
+            #line default
+            #line hidden
+            
+            #line 35 ""
+            this.Write("\n        return this;\n    }\n");
+            
+            #line default
+            #line hidden
+            
+            #line 38 ""
+
+}
+
+            
+            #line default
+            #line hidden
+            
+            #line 41 ""
+            this.Write(" \n}");
             
             #line default
             #line hidden
@@ -227,7 +203,7 @@ for (var j=0; j < propertyDescriptionLines.Count; j++)
         }
     }
     
-    public class CSharpJsonModelCodeBase {
+    public class CSharpFluentApiCodeBase {
         
         private global::System.Text.StringBuilder builder;
         
